@@ -1,7 +1,7 @@
 package com.example.shared.viewmodel
 
-import ApiClient
-import User
+import com.example.shared.model.User
+import com.example.shared.network.ApiClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
