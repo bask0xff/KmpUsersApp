@@ -1,3 +1,5 @@
+package com.example.shared.model
+
 import kotlinx.serialization.Serializable
 
 @Serializable

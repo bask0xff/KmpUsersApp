@@ -1,3 +1,6 @@
+package com.example.shared.network
+
+import com.example.shared.model.User
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.logging.LogLevel
