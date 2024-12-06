@@ -28,6 +28,26 @@ kotlin {
     }
 
     sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:2.3.2")
+                implementation("io.ktor:ktor-client-json:2.3.2")
+                implementation("io.ktor:ktor-client-logging:2.3.2")
+                implementation("io.ktor:ktor-client-serialization:2.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-okhttp:2.3.2")
+            }
+        }
+        /*val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:2.3.2")
+            }
+        }*/
+
         commonMain.dependencies {
             //put your multiplatform dependencies here
         }
