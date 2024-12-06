@@ -7,34 +7,70 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.kmpusersapp.Greeting
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.unit.dp
+import com.example.shared.model.User
+import com.example.shared.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel = UserViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    GreetingView(Greeting().greet())
-                }
+            UserListScreen(viewModel)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UserListScreen(viewModel: UserViewModel) {
+    val users = viewModel.users.collectAsState()
+    val isLoading = viewModel.isLoading.collectAsState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Users") })
+        }
+    ) { padding ->
+        Box(modifier = Modifier.padding(padding)) {
+            if (isLoading.value) {
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            } else {
+                UserList(users.value)
             }
         }
     }
 }
 
 @Composable
-fun GreetingView(text: String) {
-    Text(text = text)
+fun UserList(users: List<User>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        items(users) { user ->
+            UserItem(user)
+            Divider()
+        }
+    }
 }
 
-@Preview
 @Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
+fun UserItem(user: User) {
+    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+        Text(
+            text = user.name,
+            style = MaterialTheme.typography.headlineLarge
+        )
+        Text(
+            text = user.email,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
