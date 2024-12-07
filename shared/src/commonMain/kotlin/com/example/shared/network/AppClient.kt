@@ -3,11 +3,14 @@ package com.example.shared.network
 import com.example.kmpusersapp.Constants
 import com.example.shared.model.User
 import io.ktor.client.*
+import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+import org.json.JSONArray
+import org.json.JSONObject
 
 class ApiClient {
     private val client = HttpClient {
@@ -27,17 +30,23 @@ class ApiClient {
     }
 
     suspend fun fetchUsers(): List<User> {
-        try {
-            val response: String = client.get(Constants.BASE_URL).toString()
-            println("Raw JSON Response: $response")
+        val response: String = client.get("${Constants.BASE_URL}/users").body()
+        println("Raw JSON Response: $response")
 
-            val users: List<User> = Json.decodeFromString(response)
-            println("Parsed Users: $users")
+        val jsonArray = JSONArray(response)
+        val users = mutableListOf<User>()
 
-            return users
-        } catch (e: Exception) {
-            println("Error while fetching users: ${e.message}")
-            throw e
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val user = User(
+                id = jsonObject.getInt("id"),
+                name = jsonObject.getString("name"),
+                username = jsonObject.getString("username"),
+                email = jsonObject.getString("email")
+            )
+            users.add(user)
         }
+
+        return users
     }
 }

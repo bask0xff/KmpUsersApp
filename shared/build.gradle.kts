@@ -6,6 +6,7 @@ plugins {
     //kotlin("multiplatform")
     //kotlin("plugin.serialization")
     //alias(libs.plugins.kotlinSerialization)
+    //id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
 }
 
 kotlin {
@@ -41,11 +42,13 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
+                implementation("org.json:json:20230618")
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:2.3.2")
+                implementation("org.json:json:20230618")
             }
         }
         /*val iosMain by getting {
