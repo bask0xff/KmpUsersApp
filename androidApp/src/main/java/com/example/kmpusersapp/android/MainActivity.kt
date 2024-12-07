@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.shared.model.User
 import com.example.shared.viewmodel.UserViewModel
@@ -40,7 +42,17 @@ fun UserListScreen(viewModel: UserViewModel) {
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             if (isLoading.value) {
-                CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(32.dp),
+                        color = Color.LightGray,
+                        strokeWidth = 5.dp
+                    )
+                }
             } else {
                 UserList(users.value)
             }

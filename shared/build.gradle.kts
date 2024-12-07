@@ -37,7 +37,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-json:2.3.2")
                 implementation("io.ktor:ktor-client-logging:2.3.2")
                 implementation("io.ktor:ktor-client-serialization:2.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.21")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
 
