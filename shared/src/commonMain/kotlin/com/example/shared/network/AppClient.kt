@@ -2,6 +2,7 @@ package com.example.shared.network
 
 import com.example.kmpusersapp.Constants
 import com.example.shared.model.User
+import com.example.shared.model.UserPost
 import io.ktor.client.*
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.*
@@ -9,6 +10,7 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -48,5 +50,17 @@ class ApiClient {
         }
 
         return users
+    }
+
+    // https://jsonplaceholder.typicode.com/users/:userID/posts
+    suspend fun getPosts(userId: Int): List<UserPost>{
+        val response: String = client.get("${Constants.BASE_URL}/users/${userId}posts").body()
+
+        val jsonArray = JSONArray(response)
+        var posts = mutableListOf<UserPost>()
+
+
+        return posts
+
     }
 }
